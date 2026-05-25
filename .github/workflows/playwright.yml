@@ -3,10 +3,15 @@ on: #event triggers section
  schedule: 
   - cron: '0 0 * * *'
  workflow_dispatch:
+env:
+ BASE_URL: https://playwright.dev/
 jobs:
   test:
     timeout-minutes: 30
-    runs-on: macos-26
+    runs-on: windows-latest
+    strategy:
+      matrix: # Parallel execution matrix
+       browsers: [chromium, firefox, webkit]
     steps:
     - uses: actions/checkout@v4 #clone main repository to local runner
     - uses: actions/setup-node@v4 #Installs Node.js on the runner machine
@@ -15,12 +20,15 @@ jobs:
     - name: Install dependencies
       run: npm ci # install project-specific packages
     - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
+    #Installing only required browser at a time
+      run: npx playwright install ${{matrix.browsers}} --with-deps
     - name: Run Playwright tests
-      run: npx playwright test example.spec.ts
+    #running tests on all 3 browsers at the same time
+      run: npx playwright test tests/example.spec.ts --projects = ${{matrix.browsers}}
     - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+      if: ${{ always() }}
       with:
-        name: playwright-report
+      # Appending the browser name ensures artifact files don't overwrite each other
+        name: playwright-report ${{matrix.browsers}}
         path: playwright-report/
         retention-days: 30
