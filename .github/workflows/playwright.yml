@@ -22,9 +22,13 @@ jobs:
     - name: Install Playwright Browsers
     #Installing only required browser at a time
       run: npx playwright install ${{matrix.browsers}} --with-deps
+
+    - name: Install Allure CLI
+      run: npm install -g allure-commandline
+      
     - name: Run Playwright tests
     #running tests on all 3 browsers at the same time
-      run: npx playwright test tests/example.spec.ts --project = ${{matrix.browsers}}
+      run: npx playwright test tests/example.spec.ts --project=${{matrix.browsers}}
    
     - name: Generate Allure-report
       if: always()
