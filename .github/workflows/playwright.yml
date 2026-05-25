@@ -24,10 +24,23 @@ jobs:
       run: npx playwright install ${{matrix.browsers}} --with-deps
     - name: Run Playwright tests
     #running tests on all 3 browsers at the same time
-      run: npx playwright test tests/example.spec.ts --projects = ${{matrix.browsers}}
-    - uses: actions/upload-artifact@v4
-      if: ${{ always() }}
-      with:
+      run: npx playwright test tests/example.spec.ts --project = ${{matrix.browsers}}
+   
+    - name: Generate Allure-report
+      if: always()
+      run: npm run allure:generate  
+      
+    - name: Upload allure-report
+      uses: actions/upload-artifact@v4 # upload artifact command
+      if: always()
+      with:  #path of the allure report folder
+       name: allure-report ${{matrix.browsers}}
+       path: allure-report/
+       
+    - name: Upload Playwright report   
+      uses: actions/upload-artifact@v4
+      if: ${{!cancelled()}}
+      with: #path of the playwright report folder
       # Appending the browser name ensures artifact files don't overwrite each other
         name: playwright-report ${{matrix.browsers}}
         path: playwright-report/
