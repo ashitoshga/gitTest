@@ -32,7 +32,7 @@ jobs:
    
     - name: Generate Allure-report
       if: always()
-      run: npm run allure:generate  
+      run: npx allure generate allure-results -o allure-report
       
     - name: Upload allure-report
       uses: actions/upload-artifact@v4 # upload artifact command
