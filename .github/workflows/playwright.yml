@@ -22,13 +22,15 @@ jobs:
     - name: Install Playwright Browsers
     #Installing only required browser at a time
       run: npx playwright install ${{matrix.browsers}} --with-deps
-
+      
+    - name: Install Allure Playwright Reporter
+      run: npm install allure-playwright --save-dev
     - name: Install Allure CLI
       run: npm install -g allure-commandline
       
     - name: Run Playwright tests
     #running tests on all 3 browsers at the same time
-      run: npx playwright test tests/example.spec.ts --project=${{matrix.browsers}}
+      run: npx playwright test tests/example.spec.ts --project=${{matrix.browsers}} --reporter=line,allure-playwright
    
     - name: Generate Allure-report
       if: always()
@@ -41,11 +43,11 @@ jobs:
        name: allure-report ${{matrix.browsers}}
        path: allure-report/
        
-    - name: Upload Playwright report   
-      uses: actions/upload-artifact@v4
-      if: ${{!cancelled()}}
-      with: #path of the playwright report folder
+   # - name: Upload Playwright report   
+   #   uses: actions/upload-artifact@v4
+   #   if: ${{!cancelled()}}
+   #   with: #path of the playwright report folder
       # Appending the browser name ensures artifact files don't overwrite each other
-        name: playwright-report ${{matrix.browsers}}
-        path: playwright-report/
-        retention-days: 30
+   #     name: playwright-report ${{matrix.browsers}}
+   #     path: playwright-report/
+   #     retention-days: 30
