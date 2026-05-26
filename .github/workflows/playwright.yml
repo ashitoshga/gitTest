@@ -23,6 +23,9 @@ jobs:
     #Installing only required browser at a time
       run: npx playwright install ${{matrix.browsers}} --with-deps
 
+    - name: Install Allure report
+      run: npm install save --dev allure-report
+
     - name: Install Allure CLI
       run: npm install -g allure-commandline
       
