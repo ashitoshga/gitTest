@@ -30,7 +30,7 @@ jobs:
       
     - name: Run Playwright tests
     #running tests on all 3 browsers at the same time
-      run: npx playwright test tests/example.spec.ts --project=${{matrix.browsers}}
+      run: npx playwright test tests/example.spec.ts --project=${{matrix.browsers}} --reporter=line,allure-playwright
    
     - name: Generate Allure-report
       if: always()
