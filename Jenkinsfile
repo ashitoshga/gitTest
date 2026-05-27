@@ -54,5 +54,15 @@ post{
 
         allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
     }
+    success {
+            mail to: 'ashu.gajare@gmail.com',
+                 subject: "SUCCESS: Job '${env.JOB_NAME}' (Build #${env.BUILD_NUMBER})",
+                 body: "Great news! The Playwright automation tests passed successfully.\n\nView the execution details here: ${env.BUILD_URL}"
+        }
+    failure {
+            mail to: 'ashu.gajare@gmail.com',
+                 subject: "FAILURE: Job '${env.JOB_NAME}' (Build #${env.BUILD_NUMBER})",
+                 body: "Attention: One or more Playwright tests failed in the pipeline.\n\nPlease check the console output and Allure logs here: ${env.BUILD_URL}"
+        }
 }
 }
