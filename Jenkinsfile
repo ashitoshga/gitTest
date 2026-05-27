@@ -50,7 +50,7 @@ pipeline{
 
 post{
     always{
-        archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchieve:true
+        archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive:true
 
         allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
     }
