@@ -3,9 +3,11 @@ pipeline{
     //Updated the agent configuration from 'any' to use a specific label and Docker image for Playwright testing
     agent 
     {
-        label 'playwright-agent' //Specify the agent label to run the pipeline on a specific node
-        image 'mcr.microsoft.com/playwright:1.60.0-jammy' //Use the Playwright Docker image as the build environment
-        args '-v /tmp:/tmp --init' //
+        docker{
+            image 'mcr.microsoft.com/playwright:v1.60.0-jammy' //Use the Playwright Docker image as the build environment
+            label 'playwright-agent' //Specify the agent label to run the pipeline on a specific nod
+            args '-v /tmp:/tmp --init' //
+            }
     }
 
     triggers{
