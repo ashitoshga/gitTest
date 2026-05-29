@@ -19,7 +19,10 @@ pipeline{
     environment{
         BASE_URL = 'https://playwright.dev'
         CI = 'true'
-        PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
+        //PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
+        
+        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+                
     }
 
     stages{
@@ -55,6 +58,14 @@ pipeline{
                 sh 'npx allure generate allure-results -o allure-report'
             }
         }
+
+        stage('Debug Docker') {
+            steps {
+            sh 'echo $PATH'
+            sh 'which docker'
+            sh 'docker --version'
+            }
+}
 
     }
 
