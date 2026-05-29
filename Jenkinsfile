@@ -1,13 +1,13 @@
 pipeline{
 
     //Updated the agent configuration from 'any' to use a specific label and Docker image for Playwright testing
-    agent any
-    /*{
+    agent
+    {
         docker{
             image 'mcr.microsoft.com/playwright:v1.60.0-jammy' //Use the Playwright Docker image as the build environment
             args '-v /tmp:/tmp --init' //
             }
-    }*/
+    }
 
     triggers{
         cron 'H 1 * * *' //Schedule the job to run at 1 AM every day
