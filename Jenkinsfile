@@ -1,14 +1,25 @@
 pipeline{
-    agent any
+
+    //Updated the agent configuration from 'any' to use a specific label and Docker image for Playwright testing
+    agent 
+    {
+        label 'playwright-agent' //Specify the agent label to run the pipeline on a specific node
+        image 'mcr.microsoft.com/playwright:1.60.0-jammy' //Use the Playwright Docker image as the build environment
+        args '-v /tmp:/tmp --init' //
+    }
+
     triggers{
         cron 'H 1 * * *' //Schedule the job to run at 1 AM every day
     }
-    tools{
-        nodejs 'node' //Install nodeJs plugin
-    }
+
+    //Removed the 'tools' block as it is not necessary when using a Docker image that already has Node.js installed
+    //Add CI environment variable to indicate that the tests are running in a CI environment, which can help with test reporting and behavior
+
     environment{
         BASE_URL = 'https://playwright.dev'
+        CI = 'true'
     }
+
     stages{
 
         stage('Checkout'){
@@ -24,11 +35,8 @@ pipeline{
             }
         }
 
-        stage('Install Playwright browsers'){
-            steps{
-                sh 'npx playwright install --with-deps'
-            }
-        }
+        //Removed Install Browsers stage as the Playwright Docker image already includes the necessary browsers
+        // Pre-installed browsers in the v1.60.0 image will launch immediately
 
         stage('Run Playwright tests'){
             steps{
