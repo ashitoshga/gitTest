@@ -20,7 +20,7 @@ pipeline{
         BASE_URL = 'https://playwright.dev'
         CI = 'true'
         //PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
-        PATH = "/usr/local/bin:/usr/bin:/bin"
+        //PATH = "/usr/local/bin:/usr/bin:/bin"
         //PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
                 
     }
