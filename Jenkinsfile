@@ -5,7 +5,6 @@ pipeline{
     {
         docker{
             image 'mcr.microsoft.com/playwright:v1.60.0-jammy' //Use the Playwright Docker image as the build environment
-            label 'playwright-agent' //Specify the agent label to run the pipeline on a specific nod
             args '-v /tmp:/tmp --init' //
             }
     }
