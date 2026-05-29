@@ -19,6 +19,7 @@ pipeline{
     environment{
         BASE_URL = 'https://playwright.dev'
         CI = 'true'
+        PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
     }
 
     stages{
