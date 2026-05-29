@@ -9,6 +9,11 @@ pipeline{
             }
     }
 
+    // FORCE JENKINS TO BIND THE CORRECT DOCKER PATH UTILITY BEFORE INITIALIZING
+    tools {
+        dockerTool 'default'
+    }
+
     triggers{
         cron 'H 1 * * *' //Schedule the job to run at 1 AM every day
     }
