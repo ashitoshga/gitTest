@@ -58,26 +58,26 @@ pipeline{
             }
         }
 
-        stage('Generate allure-report'){
+        stage('Generate Allure Report'){
             steps{
-                sh 'npx allure generate allure-results -o allure-report'
+                catchError(buildResult: 'Success', stageResult:'FAILURE')
+                {
+                    sh 'npx allure generate allure-results -o allure-report'
+                }
             }
         }
-
-        stage('Debug Docker') {
-            steps {
-            sh 'echo $PATH'
-            sh 'which docker'
-            sh 'docker --version'
-            }
-}
 
     }
 
 post{
     always{
-        archiveArtifacts artifacts: '**/*', allowEmptyArchive:true
+        // Archive Allure report
+        archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
+        
+        // Archive Playwright HTML report
+        archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive: true
 
+        // Publish Allure results
         allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
     }
     success {
