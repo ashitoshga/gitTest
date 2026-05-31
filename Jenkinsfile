@@ -1,8 +1,8 @@
 pipeline{
     agent any
-    triggers{
+   /* triggers{
         cron 'H 1 * * *' //Schedule the job to run at 1 AM every day
-    }
+    }*/
     tools{
         nodejs 'node' //Install nodeJs plugin
     }
