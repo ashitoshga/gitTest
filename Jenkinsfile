@@ -1,17 +1,16 @@
 pipeline {
     agent {
         docker {
-            image 'alpine:latest'
-            reuseNode true
+            image 'mcr.microsoft.com/playwright:v1.60.0-jammy'
         }
     }
 
     stages {
-        stage('Test') {
+        stage('Debug') {
             steps {
-                sh 'echo Inside Docker'
-                sh 'whoami'
-                sh 'pwd'
+                sh 'node --version'
+                sh 'npm --version'
+                sh 'npx playwright --version'
             }
         }
     }
