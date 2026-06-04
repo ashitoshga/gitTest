@@ -1,0 +1,40 @@
+node_modules/
+playwright-report/
+test-results/
+.git/
+
+# Git metadata
+.git
+.gitignore
+
+# Package manager caches and heavy local dependencies
+node_modules/
+jspm_packages/
+.npm
+.yarn-cache/
+vendor/
+
+# Build outputs and binaries
+dist/
+build/
+bin/
+obj/
+out/
+
+# Environment variables and secrets (CRITICAL FOR SECURITY)
+.env
+.env.*
+*.pem
+*.key
+id_rsa
+
+# IDE / Editor configurations
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+
+# Operating system trash files
+.DS_Store
+Thumbs.db

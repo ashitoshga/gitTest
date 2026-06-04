@@ -1,7 +1,7 @@
 pipeline{
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.60.0-jammy'
+            image 'ashitoshgajare/my-docker-playwright-img:latest'
             // Added host network and socket sharing so the internal container runs smoothly on macOS
             args '-v /var/run/docker.sock:/var/run/docker.sock -u root:root'       
             // Run the container as root to avoid permission issues when installing dependencies and running tests}
@@ -24,12 +24,12 @@ pipeline{
     
     stages{
 
-        stage('install JDK to run allure commandline'){
+        /*stage('install JDK to run allure commandline'){
             steps{
                 sh 'apt-get update && apt-get install -y openjdk-17-jre'
             }
 
-        }
+        }*/
 
         stage('Checkout'){
             steps{
@@ -37,13 +37,13 @@ pipeline{
             }
         }
 
-        stage('Install Dependencies'){
+      /*  stage('Install Dependencies'){
             steps{
                 sh 'npm ci'
                 sh 'npm install --save-dev allure-playwright'
                 sh 'npm install -g allure-commandline'
             }
-        }
+        }*/
 
         //already exist in your package.json
         /*stage('Install Playwright browsers'){
