@@ -34,6 +34,7 @@ pipeline{
             steps{
                 sh 'npm ci'
                 sh 'npm install --save-dev allure-playwright'
+                sh 'npm install -g allure-commandline'
             }
         }
 
@@ -64,8 +65,9 @@ pipeline{
 post{
     always{
         archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive:true
+        archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
 
-        allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
+        //allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
     }
 
     success {
