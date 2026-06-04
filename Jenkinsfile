@@ -24,6 +24,13 @@ pipeline{
     
     stages{
 
+        stage('install JDK to run allure commandline'){
+            steps{
+                sh 'apt-get update && apt-get install -y openjdk-17-jre'
+            }
+
+        }
+
         stage('Checkout'){
             steps{
                 checkout scm
