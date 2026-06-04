@@ -45,11 +45,11 @@ pipeline{
             }
         }
 
-        stage('Install Playwright browsers'){
+        /*stage('Install Playwright browsers'){
             steps{
                 sh 'npx playwright install --with-deps'
             }
-        }
+        }*/
 
         stage('Run Playwright tests'){
             steps{
@@ -63,7 +63,8 @@ pipeline{
 
         stage('Generate allure-report'){
             steps{
-                sh 'npx allure generate allure-results -o allure-report'
+                sh 'npx allure generate allure-results -o allure-report --clean'
+                //overwwrite the previous report with --clean flag
             }
         }
 
@@ -71,8 +72,8 @@ pipeline{
 
 post{
     always{
-        archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive:true
-        archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
+        archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive:true
+        archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
 
         //allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
     }
