@@ -55,8 +55,8 @@ post{
 
         //allure plugin to publish allure report in Jenkins
         archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive:true
-        //archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
-        allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
+        archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
+       // allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
     }
 
     success {
