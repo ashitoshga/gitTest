@@ -43,20 +43,31 @@ pipeline{
 
 post{
     always{
-            //plugin to publish HTML report in Jenkins
-           /* publishHTML([
-            allowMissing: false,
-            alwaysLinkToLastBuild: true,
-            keepAll: true,
-            reportDir: 'playwright-report',
-            reportFiles: 'index.html',
-            reportName: 'Playwright HTML Report'
-        ])*/
-
-        //allure plugin to publish allure report in Jenkins
+         //allure plugin to publish allure report in Jenkins
         archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive:true
         archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
+        //commented out allure plugin as it was giving some issues in Jenkins, so using publishHTML to publish allure report instead
        // allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
+                  // Publishes the Playwright Report
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright HTML Report'
+            ])
+
+            // Publishes the Allure Report that your container created
+            publishHTML([
+                allowMissing: false,
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                reportDir: 'allure-report',
+                reportFiles: 'index.html',
+                reportName: 'Allure HTML Report'
+            ])
+       
     }
 
     success {
