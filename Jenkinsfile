@@ -44,14 +44,14 @@ pipeline{
 post{
     always{
             //plugin to publish HTML report in Jenkins
-            publishHTML([
+           /* publishHTML([
             allowMissing: false,
             alwaysLinkToLastBuild: true,
             keepAll: true,
             reportDir: 'playwright-report',
             reportFiles: 'index.html',
             reportName: 'Playwright HTML Report'
-        ])
+        ])*/
 
         //allure plugin to publish allure report in Jenkins
         archiveArtifacts artifacts: 'playwright-report/**/*', allowEmptyArchive:true
