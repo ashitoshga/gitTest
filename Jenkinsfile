@@ -32,7 +32,7 @@ pipeline{
 
         stage('Run Playwright tests'){
             steps{
-                catchError(buildResult: 'Success', stageResult:'FAILURE')
+                catchError(buildResult: 'SUCCESS', stageResult:'FAILURE')
                 {
                     sh 'npx playwright test'
                 }
@@ -53,22 +53,24 @@ post{
     always{
         // This script block dynamically adjusts recipient lists or subject lines based on status
         script{
-           const emailSubject: string = `${currentBuild.currentResult}: Job '$(env.JOB_NAME)' [BUILD #${BUILD_NUMBER)}`;
-           const recipientList: string = 'ashu.gajare@gmail.com';
-                if (currentBuild.currentStatus != 'SUCCESS')
+           def emailSubject = "${currentBuild.currentResult}: Job '${env.JOB_NAME}' [BUILD #${env.BUILD_NUMBER}]";
+           def recipientList = 'ashu.gajare@gmail.com';
+            
+                if (currentBuild.currentResult != 'SUCCESS')
                     { recipientList = 'ashu.gajare@gmail.com'}
-                }
+                
         // Single execution block handling all outcomes (Success, Failure, Aborted, Unstable)
         emailext(
-            subject: 'emailSubject',
-            body: ${JELLY_SCRIPT, template='html'},
-            to: recipientList
+            subject: emailSubject,
+            body: '${JELLY_SCRIPT, template="html"}',
+            to: recipientList,
             mimeType: 'text/html'
         )
-        
+    
         archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive:true
         allure includeProperties: false, jdk: '', results:[[path : 'allure-results']]
+            }
         }
-
     }
 }
+    
